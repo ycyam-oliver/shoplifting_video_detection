@@ -2,9 +2,9 @@
 
 This project aims at identifying the suspected shoplifting behaviour in videos using human pose estimation and classification of the sequences of detected keypoints. Hand pose estimation could also a possible solution but is not chosen because (1) the hand pose is more complex and more sensitive to occlusions and noises, especially in low quality video, (2) the shoplifting behaviour should be apparent from the larger scale movement and most importantly (3) I can only find useful pose data / pretrained model for classifying shoplifting behaviour within the constained time. It was done in a 5-day period on a part-time basis (~30 hours spent in total) mainly to explore the ideas. The codes are not optimized for real-time inference and are just for demo purpose, but the conversion to real-time inference is surely possible. The structure of this project is consisted of two stages.
 
-- (I) Human Pose Estimation: Object Detection with Tracking (YOLO) -> Pose Estimation (ViTPose) -> Smoothening of Keypoints (SmoothNet)
+- (I) ***Human Pose Estimation***: Object Detection with Tracking (YOLO) -> Pose Estimation (ViTPose) -> Smoothening of Keypoints (SmoothNet)
 
-- (II) Human Pose Anomaly Detection for Shoplifting Behaviour: Keypoint Classification (STG-NF)
+- (II) ***Human Pose Anomaly Detection for Shoplifting Behaviour***: Keypoint Classification (STG-NF)
 
 ## Usage
 
@@ -62,11 +62,11 @@ pip install -v -e .
 ```
 
 Next download all the model weight files into the `weights` directory
-[download link] (https://drive.google.com/drive/folders/1ipuCLbE4eDiuidWdFWctRBolDSHcKKQ0?usp=sharing)
+[download link](https://drive.google.com/drive/folders/1ipuCLbE4eDiuidWdFWctRBolDSHcKKQ0?usp=sharing)
 
-The video_clips can be downloaded from [here] (https://drive.google.com/drive/folders/1Cn5SierV-_1-0mRF8OSO79kWicbCTXyK?usp=sharing)
+The video_clips can be downloaded from [here](https://drive.google.com/drive/folders/1Cn5SierV-_1-0mRF8OSO79kWicbCTXyK?usp=sharing)
 
-The video_output content I got from my inference can be downloaded [here] (https://drive.google.com/drive/folders/1b0zsRei1cMxyri-Oyk-69YHy5Os6h0y4?usp=sharing)
+The video_output content I got from my inference can be downloaded [here](https://drive.google.com/drive/folders/1b0zsRei1cMxyri-Oyk-69YHy5Os6h0y4?usp=sharing)
 
 ## Project Description and Results Demo
 
@@ -82,21 +82,21 @@ For the limited time constrained, the relatively reliable and easy-to-setup YOLO
 
 ![Alt text](graphs/smoothnet_effect.gif)
 
-Since keypoint detection is done on individual frames separately, there is instability of keypoints detected between frames resulting in jittering problems of keypoints in videos. Some frames even have missed keypoints for the person seen in the video, due to occlusion or inherent model capability. A research into these problems lead me to the paper of [SmoothNet] (https://ailingzeng.site/smoothnet) . According to them, SmoothNet has better performance than any existing traditional filters and it is ultralight and cost minimal overhead in inference. The performance of SmoothNet is demonstrated in the above animation. They can smoothen keypoint predictions, reduce jittering as well as recovering some missed keypoints in between frames. With better postprocessing filtering technique like SmoothNet, we can lower the requirment for pose estimation and use lighter pose estimation model to reduce the inference overhead. 
+Since keypoint detection is done on individual frames separately, there is instability of keypoints detected between frames resulting in jittering problems of keypoints in videos. Some frames even have missed keypoints for the person seen in the video, due to occlusion or inherent model capability. A research into these problems lead me to the paper of [SmoothNet](https://ailingzeng.site/smoothnet) . According to them, SmoothNet has better performance than any existing traditional filters and it is ultralight and cost minimal overhead in inference. The performance of SmoothNet is demonstrated in the above animation. They can smoothen keypoint predictions, reduce jittering as well as recovering some missed keypoints in between frames. With better postprocessing filtering technique like SmoothNet, we can lower the requirment for pose estimation and use lighter pose estimation model to reduce the inference overhead. 
 
 ### (iii) Tracking
 
-<img src="graphs/Normal_Videos314_x264_track_cut.gif" alt="showing tracking by color" width="130%">
+<img src="graphs/Normal_Videos314_x264_track_cut.gif" alt="showing tracking by color" width="90%">
 
 Tracking is enabled by the ByteTrack algorithm with YOLOv11 so that we can gather the sequences of keypoints belonging to the same person. In the animation above, tracking is shown by different colors of the keypoints for each person. 
 
 ## Stage 2: Human Pose Anomaly Detection for Shoplifting
 
-To determine if the detected keypoints are suspicious or not, we need to have the knowledge of what the shoplifting keypoints are like and what the normal shopping behaviour is like. We need to have some labelled data / a pretrained model for that in order to learn this. The best dataset I managed to find and organize for model use within the time constraint is [PoseLift] (https://github.com/TeCSAR-UNCC/PoseLift). It has labels for sequences of keypoints for shoplifting and normal shopping behaviour extracted from actual videos. 
+To determine if the detected keypoints are suspicious or not, we need to have the knowledge of what the shoplifting keypoints are like and what the normal shopping behaviour is like. We need to have some labelled data / a pretrained model for that in order to learn this. The best dataset I managed to find and organize for model use within the time constraint is [PoseLift](https://github.com/TeCSAR-UNCC/PoseLift). It has labels for sequences of keypoints for shoplifting and normal shopping behaviour extracted from actual videos. 
 
 ![Alt text](graphs/model_performance_PoseLift.png)
 
-According to the paper of PoseLift, the model that has the best performance is [STG-NF] (https://github.com/orhir/STG-NF). Therefore I chose this model for the use of this project. I trained the STG-NF model myself and obtained the result on the PoseLift dataset as they claimed on the paper. Basically, as shown in the graph below for the person in the `shoplifting1.MP4` video, the STG-NF model gives a 'normality' score to the pose in the frame.
+According to the paper of PoseLift, the model that has the best performance is [STG-NF](https://github.com/orhir/STG-NF). Therefore I chose this model for the use of this project. I trained the STG-NF model myself and obtained the result on the PoseLift dataset as they claimed on the paper. Basically, as shown in the graph below for the person in the `shoplifting1.MP4` video, the STG-NF model gives a 'normality' score to the pose in the frame.
 
 ![Alt text](graphs/example_normality_score_plot.jpg)
 
@@ -118,8 +118,8 @@ In the output video, I painted keypoints with the normal pose in green and that 
 
 - Optimize the code for real-time use (Also can use lighter model for human detection and pose estimation)
 
-- Apart from identifying shoplifting by looking at the keypoints from pose estimation, we should do a systemtical comparison with the much simpler image detection approach. The advatnage of an image detection is that it can see the surrouding objects apart from the pose or hand pose. For example, the pose of a customer putting an item into the shopping basket could probably be very similar to the scenario that he/ she is putting the item into his/ her bag, but one is legal and the other is illegal. Like what the following two images show, with the image detection, we can more clearly see that the customers are putting the items into a bag but not the basket from the supermarket. More data like these can be found on datasets on [roboflow] (https://universe.roboflow.com/rehabcv-a1agb/shoplifting-2). 
+- Apart from identifying shoplifting by looking at the keypoints from pose estimation, we should do a systemtical comparison with the much simpler image detection approach. The advatnage of an image detection is that it can see the surrouding objects apart from the pose or hand pose. For example, the pose of a customer putting an item into the shopping basket could probably be very similar to the scenario that he/ she is putting the item into his/ her bag, but one is legal and the other is illegal. Like what the following two images show, with the image detection, we can more clearly see that the customers are putting the items into a bag but not the basket from the supermarket. More data like these can be found on datasets on [roboflow](https://universe.roboflow.com/rehabcv-a1agb/shoplifting-2). 
 
 ![Alt text](graphs/hand_pose_stealing.png)
 
-There is also model of this kind work for behaviour classification in video like [SlowFast] (https://github.com/facebookresearch/SlowFast). We should have a comparison of the pose model and the image detection model on these tasks. If the simpler image detection works similarly well, we could save a lot of efforts in collecting data because image/ video data without keypoint is much more readily avaiable / can much more easily collected. 
+There is also model of this kind work for behaviour classification in video like [SlowFast](https://github.com/facebookresearch/SlowFast). We should have a comparison of the pose model and the image detection model on these tasks. If the simpler image detection works similarly well, we could save a lot of efforts in collecting data because image/ video data without keypoint is much more readily avaiable / can much more easily collected. 
