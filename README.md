@@ -68,6 +68,21 @@ The video_clips can be downloaded from [here](https://drive.google.com/drive/fol
 
 The video_output content I got from my inference can be downloaded [here](https://drive.google.com/drive/folders/1b0zsRei1cMxyri-Oyk-69YHy5Os6h0y4?usp=sharing)
 
+⚠️ ***Cautions*** for running on new videos...
+
+If you are going to run new video with the stage 2 code in `keypts_anomaly_detection.ipynb`, since the STG-NF model has a hidden naming rule in some of their code that I did not rewrite due to time constraint, you need to follow the rule by adding your videoname to the 'video_name_map' variable (see the line indicated below) in the stage 1 ipynb `pose_est_video_tracking.ipynb` (at the beginning of the '# Plotting the video output...' section) as well as that near the end of the stage 2 ipynb `keypts_anomaly_detection.ipynb`. 
+
+```
+video_name_map = {
+    'Normal_Videos313_x264':'07',
+    'Normal_Videos314_x264':'08',
+    'shoplifting1':'09',
+    'shoplifting2':'10',
+    'your_videoname':'11' # <--- if you need to do inference on new video, add to this line
+} # to match the STG-NF model format
+```
+
+
 ## Project Description and Results Demo
 
 ## Stage 1: Pose Estimation
@@ -76,7 +91,7 @@ The video_output content I got from my inference can be downloaded [here](https:
 
 <img src="graphs/pose_est_example.png" alt="pose_est_example" width="60%">
 
-For the limited time constrained, the relatively reliable and easy-to-setup YOLOv11 model is used for object detection (human detection) and ViTPose model is used for pose estimation. Other more efficient models can definitely be explored for these purposes. The convention of full body COCO17 format is adapted in pose estimation because the STG-NF requires inputs in this format. 
+For the limited time constrained, the relatively reliable and easy-to-setup YOLOv11 model is used for object detection (human detection) and ViTPose model is used for pose estimation. Other more efficient models can definitely be explored for these purposes. The convention of full body COCO17 format is adapted in pose estimation because the STG-NF model requires inputs in this format. 
 
 ### (ii) Smoothening the keypoint detection 
 
