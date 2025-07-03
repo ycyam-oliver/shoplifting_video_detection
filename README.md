@@ -68,8 +68,8 @@ The video_clips can be downloaded from [here](https://drive.google.com/drive/fol
 
 The video_output content I got from my inference can be downloaded [here](https://drive.google.com/drive/folders/1b0zsRei1cMxyri-Oyk-69YHy5Os6h0y4?usp=sharing)
 
-⚠️ ***Cautions*** for running on new videos...
-> If you are going to run new video with the stage 2 code in `keypts_anomaly_detection.ipynb`, since the STG-NF model has a hidden naming rule in some of their code that I did not rewrite due to time constraint, you need to follow the rule by adding your videoname to the 'video_name_map' variable (see the line indicated below) in the stage 1 ipynb `pose_est_video_tracking.ipynb` (at the beginning of the '# Plotting the video output...' section) as well as that near the end of the stage 2 ipynb `keypts_anomaly_detection.ipynb`. 
+> ⚠️ ***Cautions*** for running on new videos...
+> If you are going to run new video with the stage 2 code in `keypts_anomaly_detection.ipynb`, since the STG-NF model has a hidden naming rule in some of their code that I did not rewrite due to time constraint, you need to follow the rule by adding your videoname to the `video_name_map` variable (see the line indicated below) in the stage 1 ipynb `pose_est_video_tracking.ipynb` (at the beginning of the '# Plotting the video output...' section) as well as that near the end of the stage 2 ipynb `keypts_anomaly_detection.ipynb`. 
 
 ```
 video_name_map = {
@@ -77,7 +77,7 @@ video_name_map = {
     'Normal_Videos314_x264':'08',
     'shoplifting1':'09',
     'shoplifting2':'10',
-    'your_videoname':'11' # <--- if you need to do inference on new video, add to this line
+    'your_videoname':'11' # <--- if you need to do inference on new video(s), add to the next number(s) like this
 } # to match the STG-NF model format
 ```
 
