@@ -64,12 +64,11 @@ pip install -v -e .
 Next download all the model weight files into the `weights` directory
 [download link](https://drive.google.com/drive/folders/1ipuCLbE4eDiuidWdFWctRBolDSHcKKQ0?usp=sharing)
 
-The video_clips can be downloaded from [here](https://drive.google.com/drive/folders/1Cn5SierV-_1-0mRF8OSO79kWicbCTXyK?usp=sharing)
+The `video_clips` can be downloaded from [here](https://drive.google.com/drive/folders/1Cn5SierV-_1-0mRF8OSO79kWicbCTXyK?usp=sharing)
 
-The video_output content I got from my inference can be downloaded [here](https://drive.google.com/drive/folders/1b0zsRei1cMxyri-Oyk-69YHy5Os6h0y4?usp=sharing)
+The `video_output` content I got from my inference can be downloaded [here](https://drive.google.com/drive/folders/1b0zsRei1cMxyri-Oyk-69YHy5Os6h0y4?usp=sharing)
 
-> ⚠️ ***Cautions*** for running on new videos...
-> If you are going to run new video with the stage 2 code in `keypts_anomaly_detection.ipynb`, since the STG-NF model has a hidden naming rule in some of their code that I did not rewrite due to time constraint, you need to follow the rule by adding your videoname to the `video_name_map` variable (see the line indicated below) in the stage 1 ipynb `pose_est_video_tracking.ipynb` (at the beginning of the '# Plotting the video output...' section) as well as that near the end of the stage 2 ipynb `keypts_anomaly_detection.ipynb`. 
+> ⚠️ ***Cautions*** for running on new videos: If you are going to run new videos with the ipynb, since the STG-NF model has a hidden naming rule in some of their code that I did not rewrite due to time constraint, you need to follow the rule by adding your videoname to the `video_name_map` variable (see the line indicated below) in (1) stage 1 ipynb `pose_est_video_tracking.ipynb` (at the beginning of the '# Plotting the video output...' section) as well as (2) that near the end of the stage 2 ipynb `keypts_anomaly_detection.ipynb`. 
 
 ```
 video_name_map = {
