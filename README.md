@@ -98,11 +98,11 @@ To determine if the detected keypoints are suspicious or not, we need to have th
 
 According to the paper of PoseLift, the model that has the best performance is [STG-NF](https://github.com/orhir/STG-NF). Therefore I chose this model for the use of this project. I trained the STG-NF model myself and obtained the result on the PoseLift dataset as they claimed on the paper. Basically, as shown in the graph below for the person in the `shoplifting1.MP4` video, the STG-NF model gives a 'normality' score to the pose in the frame.
 
-![Alt text](graphs/example_normality_score_plot.jpg)
+<img src="graphs/example_normality_score_plot.jpg" alt="example_normality_score_plot" width="80%">
 
 When the normality score is lower than certain threshold value, the person can thought of being suspected of some shoplifting behaviour, as demonstrated in the middle part of the graph indicated by the big circle. 
 
-![Alt text](graphs/normal_vs_abnormal.jpg)
+<img src="graphs/normal_vs_abnormal.jpg" alt="normal_vs_abnormal" width="80%">
 
 In the output video, I painted keypoints with the normal pose in green and that with the abnormal (shoplifting) pose in red. Please note that although STG-NF is already the best model on the PoseLift dataset, its AUCP-ROC score for identifying abnormal pose is only around 70. Also, it is trained on normal dataset and it identify abnormal activity when in inference by recognizing pose different from the normal pose that it learned. Added to that, The PoseLift dataset only has 43 videos that has shoplifting involved and 112 videos with normal behaviour throughout. The small data amount limits the performance of the model. In addition, the height/ angle of surveillance camera can affect the model performance a lot, especially when they are quite different from what is in the test dataset. From those {videoname}_anomaly_det.mp4, we can see that there is plenty missed or false-detected shoplifting behaviour. The main spirit here is just illustrate the ideas to tackle the problem. The model performance can surely be greatly improved if it is trained on more diverse data. 
 
@@ -118,8 +118,8 @@ In the output video, I painted keypoints with the normal pose in green and that 
 
 - Optimize the code for real-time use (Also can use lighter model for human detection and pose estimation)
 
-- Apart from identifying shoplifting by looking at the keypoints from pose estimation, we should do a systemtical comparison with the much simpler image detection approach. The advatnage of an image detection is that it can see the surrouding objects apart from the pose or hand pose. For example, the pose of a customer putting an item into the shopping basket could probably be very similar to the scenario that he/ she is putting the item into his/ her bag, but one is legal and the other is illegal. Like what the following two images show, with the image detection, we can more clearly see that the customers are putting the items into a bag but not the basket from the supermarket. More data like these can be found on datasets on [roboflow](https://universe.roboflow.com/rehabcv-a1agb/shoplifting-2). 
+- Apart from identifying shoplifting by looking at the keypoints from pose estimation, we should do a systemtical comparison with the much simpler image detection approach. The advatnage of an image detection is that it can see the surrouding objects apart from the pose or hand pose. For example, the pose of a customer putting an item into the ***shopping basket*** could probably be ***very similar*** to the scenario that he/ she is putting the item into his/ her ***bag***, but one is legal and the other is illegal. Like what the following two images show, with the image detection, we can more clearly see that the customers are putting the items into a bag but not the basket from the supermarket. More data like these can be found on datasets on [Roboflow](https://universe.roboflow.com/rehabcv-a1agb/shoplifting-2). 
 
-![Alt text](graphs/hand_pose_stealing.png)
+<img src="graphs/hand_pose_stealing.png" alt="showing tracking by color" width="90%">
 
 There is also model of this kind work for behaviour classification in video like [SlowFast](https://github.com/facebookresearch/SlowFast). We should have a comparison of the pose model and the image detection model on these tasks. If the simpler image detection works similarly well, we could save a lot of efforts in collecting data because image/ video data without keypoint is much more readily avaiable / can much more easily collected. 
