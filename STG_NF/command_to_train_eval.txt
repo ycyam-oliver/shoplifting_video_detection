@@ -1,0 +1,1 @@
+python .\train_eval.py --checkpoint .\checkpoints\UBnormal_supervised_79_2.tar --epochs 20
